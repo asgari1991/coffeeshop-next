@@ -197,7 +197,7 @@ a {
 }
 
 /* Navbar */
-.navbar main,
+
 .navbar_fixed main {
   background: rgb(255, 255, 255);
   transition: background-color 0.2s ease;

@@ -1,11 +1,26 @@
+'use client'
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaShoppingCart, FaRegHeart } from "react-icons/fa";
 
 const Navbar = () => {
+  const [fixTop,setFixTop]=useState(false)
+  useEffect(()=>{
+    const fixNavbarToTop=()=>{
+      const currentScroll=window.pageYOffset
+      if (currentScroll>110) {
+        setFixTop(true)
+      }else{
+        setFixTop(false)
+      }
+      
+    }
+    window.addEventListener('scroll',fixNavbarToTop)
+return ()=>window.removeEventListener('scroll',fixNavbarToTop)
+  },[])
   return (
-    <nav className="navbar absolute w-full z-[300]">
+    <nav className={`${fixTop ? "navbar_fixed": "navbar"} absolute w-full z-[300]`}>
       <main className="bg-white transition-colors duration-200 ease-in shadow-[0_1px_8px_rgba(0,0,0,0.1)] text-black flex flex-row-reverse px-[30px] h-[90px] items-center mx-auto max-w-[1192px] z-[9999] justify-between">
         <div>
           <Link href="/">
