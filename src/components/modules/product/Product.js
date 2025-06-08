@@ -8,7 +8,7 @@ const Card = () => {
     <div className="card w-full relative pt-[19px] text-black" dir="rtl">
       <div className="details_container relative mt-[5x] ">
         <img
-          src="https://set-coffee.com/wp-content/uploads/2021/10/041-430x430.png"
+          src="/images/041-430x430.png"
           alt=""
           className="w-full h-[312px] transition-all duration-[400ms] ease-in"
         />
