@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const schema=mongoose.Schema({
+const schema=new mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -21,8 +21,8 @@ const schema=mongoose.Schema({
         type:String,
         default:'USER'
     },
-      refreshToken:{
-        type:String,
-        
-    }
+      refreshToken:String
 })
+const model = mongoose.models.User || mongoose.model("User", schema);
+
+module.exports = model;
