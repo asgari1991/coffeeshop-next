@@ -1,13 +1,38 @@
 import connectToDB from "@/configs/db";
 import userModel from "../../../../../models/User";
-import { generateAccessToken, hashPassword } from "@/utils/auth";
+import { generateAccessToken, hashPassword, validateEmail, validatePassword, validatePhone } from "@/utils/auth";
 import { roles } from "@/utils/constants";
 
 export async function POST(req) {
   connectToDB();
   const body = await req.json();
   const { name, phone, email, password } = body;
-
+if (!name.trim()) {
+    return Response.json(
+      { message: "The Name is not valid" },
+      { status: 401 }
+    );
+}
+const isValidPhone = validatePhone(phone);
+    if (!isValidPhone) {
+return Response.json(
+      { message: "The Phone is not valid" },
+      { status: 401 }
+    );    }
+    if (email) {
+      const isValidEmail = validateEmail(email);
+      if (!isValidEmail) {
+return Response.json(
+      { message: "The Email is not valid" },
+      { status: 401 }
+    );      }
+    }
+    const isValidPassword = validatePassword(password);
+    if (!isValidPassword) {
+return Response.json(
+      { message: "The Password is not valid" },
+      { status: 401 }
+    );    }
   //validation
   const isUserExisted = await userModel.findOne({
     $or: [{ name }, { phone }, { email }],
