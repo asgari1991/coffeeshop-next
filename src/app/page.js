@@ -6,7 +6,8 @@ import Latest from '@/components/templates/index/latest/Latest'
 import Promote from '@/components/templates/index/promote/Promote'
 
 
-export default function Home() {
+export default async function Home() {
+ 
   return (
     <>
     <Navbar/>
