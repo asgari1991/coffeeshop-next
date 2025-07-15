@@ -17,7 +17,7 @@ const Latest = () => {
       </section>
       <main
         data-aos="fade-up"
-        className="grid grid-cols-4 gap-[30px] py-5 justify-between"
+        className="flex flex-wrap gap-[30px] py-5 justify-between"
       >
         <Product />
         <Product />

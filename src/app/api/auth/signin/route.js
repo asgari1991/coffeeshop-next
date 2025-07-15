@@ -10,7 +10,7 @@ import connectToDB from "@/configs/db";
 
 export async function POST(req) {
   try {
-    connectToDB();
+    await connectToDB();
     const body = await req.json();
     const { email, password } = body;
     //validation
@@ -28,7 +28,7 @@ export async function POST(req) {
     if (!user) {
       return Response.json({ message: "User not found" }, { status: 422 });
     }
-    const isPasswordCorrect = verifyPassword(password, user.password);
+    const isPasswordCorrect =await verifyPassword(password, user.password);
     if (!isPasswordCorrect) {
       return Response.json(
         { message: "Email or Password is wrong" },

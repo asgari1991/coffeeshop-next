@@ -5,7 +5,7 @@ import { CiSearch, CiHeart } from "react-icons/ci";
 
 const Card = () => {
   return (
-    <div className="card w-full relative pt-[19px] text-black" dir="rtl">
+    <div className="card w-[263px] relative pt-[19px] text-black" dir="rtl">
       <div className="details_container relative mt-[5x] ">
         <img
           src="/images/041-430x430.png"
