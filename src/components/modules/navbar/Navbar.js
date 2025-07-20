@@ -27,7 +27,7 @@ const Navbar = ({ isLogin }) => {
       <main className="bg-white transition-colors duration-200 ease-in shadow-[0_1px_8px_rgba(0,0,0,0.1)] text-black flex flex-row-reverse px-[30px] h-[90px] items-center mx-auto max-w-[1192px] z-[9999] justify-between">
         <div>
           <Link href="/">
-            <img src="images/logo.png" alt="logo" />
+            <img src="/images/logo.png" alt="logo" />
           </Link>
         </div>
 

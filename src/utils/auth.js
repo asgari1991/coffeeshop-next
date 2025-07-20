@@ -48,7 +48,7 @@ const validatePassword = (password) => {
   return pattern.test(password)
 };
 const authUser=async () => {
-  await connectToDB()
+  connectToDB()
    const token = cookies().get("token");
   let user = null;
   if (token) {

@@ -13,6 +13,8 @@ module.exports = {
       },
       colors: {
         brandGreen: "#114639",
+        buttonGreen: "rgb(0, 137, 121)",
+        buttonHover: "rgb(113, 29, 28)",
         mainBrown: "rgb(52, 24, 14)"
       },
       backgroundImage: {

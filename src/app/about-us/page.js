@@ -1,4 +1,4 @@
-// import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
+import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
 import Footer from "@/components/modules/footer/Footer";
 import Navbar from "@/components/modules/navbar/Navbar";
 
@@ -11,10 +11,10 @@ const page = async () => {
   return (
     <>
     
-      <Navbar isLogin={user}/>
-      {/* <Breadcrumb route={"درباره ما"} /> */}
+      <Navbar isLogin={user ? true : false}/>
+       <Breadcrumb route={"درباره ما"} /> 
       <div className="text-black text-right max-w-[1222px] w-full px-[15px] mr-auto ml-auto mb-16">
-        <section className="grid grid-cols-3 text-gray-500 leading-8 gap-[110px] py-40" dir="rtl">
+        <section className="grid grid-cols-3 text-gray-500 leading-8 gap-[110px]" dir="rtl">
           <div className="grid gap-[5px] text-black">
             <span className="text-[14px]">درباره ما</span>
             <p className="text-[36px] leading-[2.4rem]">فنجان داغ خوارزمی قهوه ست</p>
