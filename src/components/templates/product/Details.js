@@ -1,4 +1,4 @@
-import { FaFacebookF, FaStar, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaRegStar, FaStar, FaTwitter } from "react-icons/fa";
 import { IoCheckmark } from "react-icons/io5";
 import { CiHeart } from "react-icons/ci";
 import { TbSwitch3 } from "react-icons/tb";
@@ -6,36 +6,34 @@ import { FaTelegram, FaLinkedinIn, FaPinterest } from "react-icons/fa";
 import styles from "./details.module.css";
 import Breadcrumb from "./Breadcrumb";
 
-const Details = () => {
+const Details = ({ product }) => {
+ 
+  
   return (
     <main className="w-[63%]">
-      <Breadcrumb
-        title={
-          "کپسول قهوه SETpresso سازگار با دستگاه نسپرسو ( GOLD ) ده -10- عددی"
-        }
-      />
+      <Breadcrumb title={product.name} />
       <h2 className="font-shabnamBold">
-        کپسول قهوه SETpresso سازگار با دستگاه نسپرسو ( GOLD ) ده -10- عددی
+{product.name}
       </h2>
 
       <div className={`${styles.rating} flex gap-2 mt-8`}>
         <div className="flex gap-0.5">
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
+          {new Array(product.score).fill(0).map((item,index)=>(
+<FaStar key={index} />
+          ))}
+          {new Array(5-product.score).fill(0).map((item,index)=>(
+<FaRegStar key={index} />
+          ))}
+        
         </div>
-        <p>(دیدگاه 7 کاربر)</p>
+        <p>(دیدگاه {product.comments.length} کاربر)</p>
       </div>
 
       <p className="text-mainBrown text-2xl font-shabnamBold my-6">
-        205,000 تومان
+       {product.price.toLocaleString()} تومان
       </p>
       <span className="block w-[93%] text-sm text-gray-500">
-        کپسول قهوه ست مدل Gold سازگار با دستگاههای کپسولی نسپرسو می باشد . ترکیب
-        این قهوه عربیکا بوده و با برشته کاری متوسط درجاتی از اسیدیته به همراه تن
-        واری متوسط , و برای ترکیب با شیر بسیار عالی می باشد.
+      {product.shortDescription}
       </span>
 
       <hr />
@@ -52,33 +50,48 @@ const Details = () => {
           افزودن به سبد خرید
         </button>
         <div className="flex justify-between items-center w-20 border border-gray-500">
-          <span className="w-[30%] cursor-pointer py-2.5 border-l border-black">-</span>1
-          <span className="w-[30%] cursor-pointer py-2.5 border-r border-black">+</span>
+          <span className="w-[30%] cursor-pointer py-2.5 border-l border-black">
+            -
+          </span>
+          1
+          <span className="w-[30%] cursor-pointer py-2.5 border-r border-black">
+            +
+          </span>
         </div>
       </div>
 
       <section className="flex gap-5 mb-[30px]">
         <div className="flex items-center gap-1">
           <CiHeart className="text-xl" />
-          <a href="/" className="text-sm transition-all duration-200 hover:text-gray-500 hover:cursor-pointer">افزودن به علاقه مندی ها</a>
+          <a
+            href="/"
+            className="text-sm transition-all duration-200 hover:text-gray-500 hover:cursor-pointer"
+          >
+            افزودن به علاقه مندی ها
+          </a>
         </div>
         <div className="flex items-center gap-1">
           <TbSwitch3 className="text-xl" />
-          <a href="/" className="text-sm transition-all duration-200 hover:text-gray-500 hover:cursor-pointer">مقایسه</a>
+          <a
+            href="/"
+            className="text-sm transition-all duration-200 hover:text-gray-500 hover:cursor-pointer"
+          >
+            مقایسه
+          </a>
         </div>
       </section>
 
       <hr />
 
       <div className="flex flex-col gap-4 mt-[30px]">
-        <strong>شناسه محصول: GOLD Nespresso Compatible capsule</strong>
+        <strong>شناسه محصول: {product._id}</strong>
         <p>
           {" "}
           <strong>دسته:</strong> Coffee Capsule, کپسول قهوه, همه موارد
         </p>
         <p>
-          <strong>برچسب:</strong> کپسول قهوه،کپسول قهوه ست پرسو،کپسول قهوه
-          ایرانی،کپسول قهوه نسپرسو ایرانی،قهوه ست ، Setpresso،Gold Setpresso
+          <strong>برچسب:</strong> 
+          {product.tags.join(" , ")}
         </p>
       </div>
 

@@ -3,6 +3,7 @@ import CommentModel from "@/models/Comment";
 import ProductModel from "@/models/Product";
 
 export async function POST(req) {
+  
   try {
     connectToDB();
     const reqBody = await req.json();
