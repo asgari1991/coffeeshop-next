@@ -2,7 +2,7 @@ import Comment from "@/components/modules/comment/Comment";
 
 import CommentForm from "./CommentForm";
 
-const Comments = ({comments}) => {
+const Comments = ({comments,productID}) => {
   return (
     <div>
       <p>نظرات (7) :</p>
@@ -20,7 +20,7 @@ const Comments = ({comments}) => {
           </div>
         </div>
         <div className="w-[50%]">
-          <CommentForm />
+          <CommentForm productID={productID} />
         </div>
       </main>
     </div>
