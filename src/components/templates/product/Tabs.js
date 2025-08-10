@@ -49,7 +49,7 @@ const Tabs = ({product}) => {
         <li title="Shipping" className="flex-1 w-[30px] px-2.5 text-center box-border">
           <label htmlFor="comments" role="button" className=" transition-all duration-300 ease-in-out text-gray-500 text-base pt-5 relative overflow-hidden truncate block cursor-pointer font-shabnam">
             {" "}
-            نظرات ({product.comments.length}){" "}
+            نظرات ({product.comments.filter(comment=>comment.isAccept).length}){" "}
           </label>
         </li>
       </ul>

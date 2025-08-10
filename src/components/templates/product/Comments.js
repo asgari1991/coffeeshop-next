@@ -5,7 +5,7 @@ import CommentForm from "./CommentForm";
 const Comments = ({comments,productID}) => {
   return (
     <div>
-      <p>نظرات (7) :</p>
+      <p>نظرات ({comments.filter(comment=>comment.isAccept).length}) :</p>
       <hr />
 
       <main className="flex gap-[50px]">
@@ -15,7 +15,7 @@ const Comments = ({comments,productID}) => {
             ده -10- عددی
           </p>
           <div>
-            {comments.map(comment=><Comment key={comment._id} {...comment} />)}
+            {comments.map(comment=>comment.isAccept && <Comment key={comment._id} {...comment} />)}
             
           </div>
         </div>
