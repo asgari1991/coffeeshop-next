@@ -15,7 +15,7 @@ const product = async ({params}) => {
   const user = await authUser();
 const productID=params.id
 const product = await ProductModel.findOne({ _id: productID }).populate("comments")
-
+const relatedProducts=await ProductModel.find({smell:product.smell})
 
   return (
     <div className=" overflow-auto">
@@ -26,7 +26,7 @@ const product = await ProductModel.findOne({ _id: productID }).populate("comment
           <Gallery />
         </div>
         <Tabs product={JSON.parse(JSON.stringify(product))} />
-        <MoreProducts />
+        <MoreProducts relatedProducts={relatedProducts} />
       </div>
       <Footer />
     </div>

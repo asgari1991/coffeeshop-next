@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { CiSearch, CiHeart } from "react-icons/ci";
 
-const Card = () => {
+const Card = ({name,price}) => {
   return (
     <div className="card w-[263px] relative pt-[19px] text-black" dir="rtl">
       <div className="details_container relative mt-[5x] ">
@@ -27,8 +27,7 @@ const Card = () => {
 
       <div className="details flex flex-col gap-1 text-center pt-[5px] justify-center items-center">
         <Link href={"/"}>
-          کپسول قهوه SETpresso سازگار با دستگاه نسپرسو ( RED ) 10 عددی LIMITED
-          EDITION
+          {name}
         </Link>
         <div dir="ltr" className="flex flex-row">
           <FaStar className="text-orange-500" />
@@ -37,7 +36,7 @@ const Card = () => {
           <FaRegStar className="text-orange-500" />
           <FaRegStar className="text-orange-500" />
         </div>
-        <span className="text-[rgb(52,24,14)]">825,000 تومان</span>
+        <span className="text-[rgb(52,24,14)]">{price.toLocaleString()} تومان</span>
       </div>
     </div>
   );
