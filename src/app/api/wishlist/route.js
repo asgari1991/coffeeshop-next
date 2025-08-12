@@ -1,6 +1,5 @@
 import connectToDB from "@/configs/db";
-import WishlistModel from "@/models/wishlist";
-
+import WishlistModel from "@/models/Wishlist";
 
 export async function POST(request){
     try {

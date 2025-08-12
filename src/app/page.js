@@ -9,9 +9,10 @@ import { authUser } from "@/utils/auth";
 
 export default async function Home() {
  const user=await authUser()
+
   return (
     <>
-      <Navbar isLogin={user ? true : false} />
+      <Navbar isLogin={user ? true: false}/>
       <Banner />
       <Latest />
       <Promote />

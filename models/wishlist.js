@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('./User')
+require('./User').default
 require('./Product')
 const Schema = mongoose.Schema(
     {

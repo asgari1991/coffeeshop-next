@@ -36,7 +36,7 @@ const Card = ({name,price}) => {
           <FaRegStar className="text-orange-500" />
           <FaRegStar className="text-orange-500" />
         </div>
-        <span className="text-[rgb(52,24,14)]">{price.toLocaleString()} تومان</span>
+        <span className="text-[rgb(52,24,14)]">{price?.toLocaleString()} تومان</span>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
 
+const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   name: {
     type: String,
@@ -31,4 +31,5 @@ const schema = new mongoose.Schema({
 
 const model = mongoose.models.User || mongoose.model("User", schema);
 
-module.exports = model;
+export default model;
+

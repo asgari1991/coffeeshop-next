@@ -1,11 +1,8 @@
 import {
   generateAccessToken,
   generateRefreshToken,
- 
-  validateEmail,
- 
-  validatePassword,
- 
+  valiadteEmail,
+  valiadtePassword,
   verifyPassword,
 } from "@/utils/auth";
 import UserModel from "@/models/User";
@@ -18,8 +15,8 @@ export async function POST(req) {
     const { email, password } = body;
 
     // Validation
-    const isValidEmail = validateEmail(email);
-    const isValidPassword = validatePassword(password);
+    const isValidEmail = valiadteEmail(email);
+    const isValidPassword = valiadtePassword(password);
 
     if (!isValidEmail || !isValidPassword) {
       return Response.json(
