@@ -14,7 +14,12 @@ export async function POST(request){
             headers: { "Content-Type": "application/json" },
         });
     }
-    await WishlistModel.create({user, product});
+    const wish=await WishlistModel.findOne({ user, product });
+    if (!wish) {
+await WishlistModel.create({user, product});
+        
+    }
+    
     return Response.json({ message: "Product added to wishlist successfully" }, {status: 201})
     } catch (error) {
         return Response.json({ error: "Internal Server Error" }, { status: 500});

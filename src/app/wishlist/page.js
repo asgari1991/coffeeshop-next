@@ -3,7 +3,7 @@ import Footer from "@/components/modules/footer/Footer";
 import Navbar from "@/components/modules/navbar/Navbar";
 import Product from "@/components/modules/product/Product";
 import connectToDB from "@/configs/db";
-import { authUser } from "@/utils/auth";
+import { authUser } from "@/utils/auth.server";
 import Link from "next/link";
 import { FaRegHeart } from "react-icons/fa";
 import WishlistModel from "@/models/Wishlist";
@@ -20,7 +20,7 @@ const page = async () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar isLogin={user ? true: false} />
       <Breadcrumb route={"علاقه مندی ها"} />
       <main className="text-black text-right max-w-[1222px] w-full pr-[15px] pl-[15px] mx-auto mb-16" data-aos="fade-up">
         <p className="pb-[10px] border-b border-[rgba(128,128,128,0.363)] text-[20px]">محصولات مورد علاقه شما</p>

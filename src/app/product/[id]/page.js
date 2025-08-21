@@ -6,7 +6,7 @@ import MoreProducts from "@/components/templates/product/MoreProducts";
 
 import Footer from "@/components/modules/footer/Footer";
 import Navbar from "@/components/modules/navbar/Navbar";
-import { authUser } from "@/utils/auth";
+import { authUser } from "@/utils/auth.server";
 import ProductModel from "@/models/Product";
 import connectToDB from "@/configs/db";
 
@@ -26,7 +26,7 @@ const relatedProducts=await ProductModel.find({smell:product.smell})
           <Gallery />
         </div>
         <Tabs product={JSON.parse(JSON.stringify(product))} />
-        <MoreProducts relatedProducts={relatedProducts} />
+        <MoreProducts relatedProducts={JSON.parse(JSON.stringify(relatedProducts))} />
       </div>
       <Footer />
     </div>

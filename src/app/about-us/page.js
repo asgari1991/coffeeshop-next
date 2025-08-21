@@ -1,8 +1,7 @@
 import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
 import Footer from "@/components/modules/footer/Footer";
 import Navbar from "@/components/modules/navbar/Navbar";
-
-import { authUser } from "@/utils/auth";
+import { authUser } from "@/utils/auth.server";
 
 
 const page = async () => {

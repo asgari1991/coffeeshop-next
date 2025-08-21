@@ -1,10 +1,12 @@
+
 import { FaFacebookF, FaRegStar, FaStar, FaTwitter } from "react-icons/fa";
 import { IoCheckmark } from "react-icons/io5";
-import { CiHeart } from "react-icons/ci";
+
 import { TbSwitch3 } from "react-icons/tb";
 import { FaTelegram, FaLinkedinIn, FaPinterest } from "react-icons/fa";
 import styles from "./details.module.css";
 import Breadcrumb from "./Breadcrumb";
+import AddToWishlist from "./AddToWishlist";
 
 const Details = ({ product }) => {
  
@@ -61,15 +63,7 @@ const Details = ({ product }) => {
       </div>
 
       <section className="flex gap-5 mb-[30px]">
-        <div className="flex items-center gap-1">
-          <CiHeart className="text-xl" />
-          <a
-            href="/"
-            className="text-sm transition-all duration-200 hover:text-gray-500 hover:cursor-pointer"
-          >
-            افزودن به علاقه مندی ها
-          </a>
-        </div>
+        <AddToWishlist productID={product._id}/>
         <div className="flex items-center gap-1">
           <TbSwitch3 className="text-xl" />
           <a
