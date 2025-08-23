@@ -1,0 +1,8 @@
+.maps {
+  display: flex;
+  gap: 25px;
+}
+
+.maps section {
+  width: 50%;
+}
