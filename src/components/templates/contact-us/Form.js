@@ -1,5 +1,40 @@
+'use client'
+
+import { showSwal } from "@/utils/helpers";
+import { useState } from "react";
 
 const Form = () => {
+  const [email,setEmail]=useState("")
+  const [name,setName]=useState("")
+  const [phone,setPhone]=useState("")
+  const [company,setCompany]=useState("")
+  const [message,setMessage]=useState("")
+  const submitMessage=async(event)=>{
+    event.preventDefault()
+    // validation
+    if(!email || !name || !phone || !company || !message){
+    showSwal("لطفا تمامی فیلد ها را پر کنید","error","باشه")
+    return 
+    }
+    const contact={email,name,phone,company,message}
+    const res=await fetch("/api/contact",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(contact)
+    })
+if(res.status===201){
+  showSwal("پیام شما با موفقیت ارسال شد","success","باشه")
+  setEmail("")
+  setName("")
+  setPhone("")
+  setCompany("")
+  setMessage("")
+}
+
+  }
+
   return (
     <form className="w-1/2 mt-12">
       <span className="text-gray-600 text-sm">فرم تماس با ما</span>
@@ -7,33 +42,33 @@ const Form = () => {
       <div className="flex gap-4">
         <div className="flex flex-col w-full mb-[14px] gap-2">
           <label>نام و نام خانوادگی</label>
-          <input type="text" dir="rtl"
+          <input type="text" dir="rtl" value={name} onChange={(e)=>setName(e.target.value)}
   className="outline-none border border-black/20 bg-white w-full text-base rounded-[5px] text-black resize-none px-4 py-3" />
         </div>
         <div className="flex flex-col w-full mb-[14px] gap-2">
           <label>آدرس ایمیل</label>
-          <input type="text" dir="rtl"
+          <input type="text" dir="rtl" value={email} onChange={(e)=>setEmail(e.target.value)}
   className="outline-none border border-black/20 bg-white w-full text-base rounded-[5px] text-black resize-none px-4 py-3" />
         </div>
       </div>
       <div className="flex gap-4">
         <div className="flex flex-col w-full mb-[14px] gap-2">
           <label>شماره تماس</label>
-          <input type="text" dir="rtl"
+          <input type="text" dir="rtl" value={phone} onChange={(e)=>setPhone(e.target.value)}
   className="outline-none border border-black/20 bg-white w-full text-base rounded-[5px] text-black resize-none px-4 py-3" />
         </div>
         <div className="flex flex-col w-full mb-[14px] gap-2">
           <label>نام شرکت</label>
-          <input type="text" dir="rtl"
+          <input type="text" dir="rtl" value={company} onChange={(e)=>setCompany(e.target.value)}
   className="outline-none border border-black/20 bg-white w-full text-base rounded-[5px] text-black resize-none px-4 py-3" />
         </div>
       </div>
       <div className="flex flex-col w-full mb-[14px] gap-2">
         <label>درخواست شما</label>
-        <textarea name="" id="" cols="30" rows="3" dir="rtl"
+        <textarea name="" id="" cols="30" rows="3" dir="rtl" value={message} onChange={(e)=>setMessage(e.target.value)}
   className="outline-none border border-black/20 bg-white w-full text-base rounded-[5px] text-black resize-none px-4 py-3"></textarea>
       </div>
-      <button className="w-full px-5 py-3 text-[13px] leading-[18px] rounded bg-mainBrown hover:bg-brandGreen text-white hover:text-white relative inline-flex items-center justify-center outline-none border-0 shadow-none align-middle text-center no-underline uppercase font-semibold cursor-pointer transition-colors duration-300 ease-in-out">ارسال</button>
+      <button onClick={submitMessage} className="w-full px-5 py-3 text-[13px] leading-[18px] rounded bg-mainBrown hover:bg-brandGreen text-white hover:text-white relative inline-flex items-center justify-center outline-none border-0 shadow-none align-middle text-center no-underline uppercase font-semibold cursor-pointer transition-colors duration-300 ease-in-out">ارسال</button>
     </form>
   );
 };
