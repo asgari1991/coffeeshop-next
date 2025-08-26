@@ -15,7 +15,8 @@ module.exports = {
         brandGreen: "#114639",
         buttonGreen: "rgb(0, 137, 121)",
         buttonHover: "rgb(113, 29, 28)",
-        mainBrown: "rgb(52, 24, 14)"
+        mainBrown: "rgb(52, 24, 14)",
+        panelBrown:" #711d1c"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
