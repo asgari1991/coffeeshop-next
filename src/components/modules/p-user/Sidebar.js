@@ -10,6 +10,7 @@ import { TbListDetails } from "react-icons/tb";
 import Link from "next/link";
 import swal from "sweetalert";
 
+
 const Sidebar = () => {
   const path = usePathname();
 
@@ -18,14 +19,26 @@ const Sidebar = () => {
       title: "آیا از خروج اطمینان دارید؟",
       icon: "warning",
       buttons: ["نه", "آره"],
-    }).then((result) => {
-      //code
+    }).then(async(result) => {
+      const res=await fetch("/api/auth/signout",{
+        method:'POST',
+      
+      })
+      if (res.status===200) {
+        swal({
+          title:"با موفقیت از حساب خارج شدید",
+          icon:"success",
+          buttons:"فهمیدم"
+        }).then(result=>{
+location.replace('/')
+        })
+      }
     });
   };
   return (
     <aside className="w-[350px] h-screen bg-panelBrown text-white p-2.5 sticky top-0">
       <div className="text-center mt-3 pb-[23px] border-b border-white">
-        <p>خوش اومدی شاهین عزیز</p>
+        <p>خوش اومدی محمد عزیز</p>
       </div>
       <ul className="flex flex-col gap-8 py-[30px] px-2.5 ">
         {path.includes("/p-user") ? (

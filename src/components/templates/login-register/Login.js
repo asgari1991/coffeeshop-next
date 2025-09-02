@@ -36,6 +36,7 @@ const Login = ({ showRegisterForm }) => {
     })
    if (res.status===200) {
     showSwal("شما با موفقیت وارد شدین","success","ورود به پنل کاربری")
+    location.replace('/')
    }else if (res.status===422 || res.status===401) {
         showSwal("کاربری با این مشخصات یافت نشد","error","تلاش مجدد")
 
