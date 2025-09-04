@@ -27,7 +27,7 @@ const schema=new mongoose.Schema({
         ref: "SubDepartment",
         required:true
     },
-    prority : {
+    priority : {
         type:Number,
         default:1,
         enum: [1,2,3]

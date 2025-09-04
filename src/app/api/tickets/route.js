@@ -7,7 +7,7 @@ export async function POST(req) {
         connectToDB();
   const user = await authUser();
   const reqBody = await req.json();
-  const { title, body, department, subDepartment, prority } = reqBody;
+  const { title, body, department, subDepartment, priority } = reqBody;
   //validation
 
 
@@ -16,7 +16,7 @@ export async function POST(req) {
     body,
     department,
     subDepartment,
-    prority,
+    priority,
     user: user._id,
   });
   return Response.json({message:"ticket created successfully"},{status:201})

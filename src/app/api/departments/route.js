@@ -16,3 +16,13 @@ export async function POST(req) {
     }
    
 }
+export async function GET(req) {
+    try {
+        connectToDB()
+        const departments=await DepartmentModel.find({})
+        return Response.json(departments,{status:200})
+    } catch (error) {
+        return Response.json({message:error},{status:500})
+        
+    }
+}
