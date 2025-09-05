@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 require('./Department')
 require('./SubDepartment')
 require('./User')
-req
+
 const schema=new mongoose.Schema({
     title : {
         type:String,
@@ -32,6 +32,9 @@ const schema=new mongoose.Schema({
         default:1,
         enum: [1,2,3]
     },
+    isAnswered : {
+        type:Boolean,
+        default:false},
 },{
     timestamps:true
 })

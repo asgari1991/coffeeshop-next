@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "@/styles/p-user/sendTicket.module.css";
 import Link from "next/link";
 import { IoIosSend } from "react-icons/io";
+import { showSwal } from "@/utils/helpers";
 const SendTicket = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -24,17 +25,56 @@ const SendTicket = () => {
   useEffect(() => {
     const getSubDepartments = async () => {
       const res = await fetch(`/api/departments/sub/${departmentID}`);
-      if(res.status ===200){
- const data = await res.json();
- 
- 
-      setSubDepartment([...data])
+      if (res.status === 200) {
+        const data = await res.json();
+
+        setSubDepartment([...data]);
       }
-     
     };
 
     getSubDepartments();
   }, [departmentID]);
+  const sendTicket =async () => {
+    //validation
+    if (
+      departmentID === -1 ||
+      subDepartmentID === -1 ||
+      title.trim().length < 3 ||
+      body.trim().length < 10
+    ) {
+      showSwal("لطفا تمامی فیلدها را به درستی پر نمایید.", "error", "فهمیدم");
+      
+    }
+    const ticket = {
+      title,
+      body,
+      department: departmentID,
+      subDepartment: subDepartmentID,
+      priority,
+    };
+    const res=await fetch("/api/tickets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify(ticket)})
+      console.log('res', res);
+      
+      if(res.status===201){
+        swal({
+          title: "تیکت با موفقیت ارسال شد.",
+          icon: "success",
+          button: "مشاهده تیکت ها",
+        }).then((result)=>{
+          location.replace("/p-user/tickets")
+        })
+        setTitle("");
+        setBody("");
+        setDepartmentID(-1);
+        setSubDepartmentID(-1);
+        setPriority(1);
+      }
+  };
   return (
     <main className="px-[30px]">
       <h1 className={styles.title}>
@@ -60,10 +100,17 @@ const SendTicket = () => {
         </div>
         <div className="flex gap-[5px] flex-col bg-white">
           <label>نوع تیکت را انتخاب کنید:</label>
-          <select className="bg-white p-2.5 text-black rounded-md outline-none border-[3px] border-panelBrown mt-[4.5px]">
+          <select
+            onChange={(event) => setSubDepartmentID(event.target.value)}
+            className="bg-white p-2.5 text-black rounded-md outline-none border-[3px] border-panelBrown mt-[4.5px]"
+          >
             <option value={-1}>لطفا یک مورد را انتخاب نمایید.</option>
-            {subDepartment.length && subDepartment.map((sub)=><option key={sub._id} value={sub._id}>{sub.title}</option>)}
-
+            {subDepartment.length &&
+              subDepartment.map((sub) => (
+                <option key={sub._id} value={sub._id}>
+                  {sub.title}
+                </option>
+              ))}
           </select>
         </div>
         <div className="flex gap-[5px] flex-col bg-white">
@@ -71,22 +118,30 @@ const SendTicket = () => {
           <input
             placeholder="عنوان..."
             type="text"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
             className="w-full p-2.5 resize-none bg-white mt-1 outline-none text-black rounded-md border-[3px] border-panelBrown"
           />
         </div>
         <div className="flex gap-[5px] flex-col bg-white">
           <label>سطح اولویت تیکت را انتخاب کنید:</label>
-          <select className="bg-white p-2.5 text-black rounded-md outline-none border-[3px] border-panelBrown mt-[4.5px]">
-            <option>لطفا یک مورد را انتخاب نمایید.</option>
-            <option value="3">کم</option>
-            <option value="2">متوسط</option>
-            <option value="1">بالا</option>
+          <select
+            onChange={(event) => setPriority(event.target.value)}
+            className="bg-white p-2.5 text-black rounded-md outline-none border-[3px] border-panelBrown mt-[4.5px]"
+          >
+            <option value={-1}>لطفا یک مورد را انتخاب نمایید.</option>
+            <option value={1}>کم</option>
+            <option value={2}>متوسط</option>
+            <option value={3}>بالا</option>
           </select>
         </div>
       </div>
       <div className="flex gap-[5px] flex-col bg-white">
         <label>محتوای تیکت را وارد نمایید:</label>
         <textarea
+          placeholder="متن تیکت..."
+          value={body}
+          onChange={(event) => setBody(event.target.value)}
           rows={10}
           className="mb-4 w-full p-2.5 resize-none bg-white mt-1 outline-none text-black rounded-md border-[3px] border-panelBrown"
         ></textarea>
@@ -100,7 +155,10 @@ const SendTicket = () => {
         />
       </div>
 
-      <button className="flex items-center gap-1 bg-panelBrown w-max py-2 px-[0.8rem] text-white rounded cursor-pointer mt-4 mb-8">
+      <button
+        onClick={sendTicket}
+        className="flex items-center gap-1 bg-panelBrown w-max py-2 px-[0.8rem] text-white rounded cursor-pointer mt-4 mb-8"
+      >
         <IoIosSend className="w-5 h-5" />
         ارسال تیکت
       </button>
