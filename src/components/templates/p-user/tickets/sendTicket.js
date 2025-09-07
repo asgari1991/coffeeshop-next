@@ -4,6 +4,7 @@ import styles from "@/styles/p-user/sendTicket.module.css";
 import Link from "next/link";
 import { IoIosSend } from "react-icons/io";
 import { showSwal } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
 const SendTicket = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -12,7 +13,7 @@ const SendTicket = () => {
   const [subDepartment, setSubDepartment] = useState([]);
   const [subDepartmentID, setSubDepartmentID] = useState(-1);
   const [priority, setPriority] = useState(1);
-
+const router=useRouter()
   useEffect(() => {
     const getDepartments = async () => {
       const res = await fetch("/api/departments");
@@ -66,7 +67,7 @@ const SendTicket = () => {
           icon: "success",
           button: "مشاهده تیکت ها",
         }).then((result)=>{
-          location.replace("/p-user/tickets")
+          router.replace("/p-user/tickets")
         })
         setTitle("");
         setBody("");

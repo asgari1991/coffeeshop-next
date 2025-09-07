@@ -5,12 +5,13 @@ import swal from "sweetalert";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { MdOutlineDelete } from "react-icons/md";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function AccountDetails() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-
+const router=useRouter()
   useEffect(() => {
     const getUser = async () => {
       const res = await fetch("/api/auth/me");
@@ -47,7 +48,7 @@ function AccountDetails() {
         buttons: "فهمیدم",
       }).then(async (result) => {
         await fetch("/api/auth/signout", { method: "POST" });
-        location.replace("/login-register");
+        router.replace("/login-register")
       });
     }
   };

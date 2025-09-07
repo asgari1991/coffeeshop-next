@@ -2,7 +2,9 @@ import Ticket from "./Ticket";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 
-const Tickets = () => {
+const Tickets = ({tickets}) => {
+ 
+  
   return (
     <div className="bg-red-900/5 w-1/2 text-black px-4 rounded-[5px]">
       <div className="flex justify-between p-4 border-b border-b-panelBrown">
@@ -11,9 +13,11 @@ const Tickets = () => {
           همه تیکت ها <FaArrowLeft className="text-panelBrown" />
         </Link>
       </div>
-      <Ticket />
-      <Ticket />
-      <Ticket />
+    {tickets.map(ticket=>(
+       <Ticket key={ticket._id} {...ticket}/>
+    )
+     
+    )}
 
       {/* <p className=" w-full pt-[9rem] pb-[12.5rem] text-center text-4xl">تیکتی ثبت نشده</p> */}
     </div>
