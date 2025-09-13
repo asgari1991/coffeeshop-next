@@ -7,6 +7,7 @@ import Ticket from "./Ticket";
 
 function Tickets({ tickets }) {
   return (
+    
     <main className="px-[30px]">
       <h1 className={styles.title}>
         <span className="bg-white px-4 mr-16">همه تیکت ها</span>

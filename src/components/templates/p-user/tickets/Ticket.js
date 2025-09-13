@@ -10,7 +10,7 @@ const Ticket = ({ _id, title, createdAt, department, hasAnswer }) => {
       </div>
       <div className=" flex items-center flex-col gap-2.5 text-center pt-2">
         <p>{new Date(createdAt).toLocaleDateString("fa-IR")}</p>
-        <p className="bg-panelBrown text-white rounded p-2">
+        <p className={`${hasAnswer ? "bg-green-500" : "bg-panelBrown" } text-white rounded p-2`}>
           {hasAnswer ? "پاسخ داده شده" : "پاسخ داده نشده"}
         </p>
         {/* answer */}

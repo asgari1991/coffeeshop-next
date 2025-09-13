@@ -1,11 +1,12 @@
 import Layout from "@/components/layouts/UserPanelLayout";
-import Box from "@/components/templates/p-user/index/Box";
+
 import Tickets from "@/components/templates/p-user/index/Tickets";
 import Orders from "@/components/templates/p-user/index/Orders";
 import { authUser } from "@/utils/auth.server";
 import TicketModel from "@/models/Ticket";
 import CommentModel from "@/models/Comment";
 import WishlistModel from "@/models/Wishlist";
+import Box from "@/components/modules/infoBox/InfoBox";
 const Index = async () => {
   const user = await authUser();
   
@@ -21,6 +22,7 @@ const Index = async () => {
   return (
     <Layout>
       <main>
+       
         <section className="flex flex-wrap gap-5 mt-12 px-10 ">
           <Box title="مجموع تیکت ها " value={allTickets.length} />
           <Box title="مجموع کامنت ها " value={comments.length} />
