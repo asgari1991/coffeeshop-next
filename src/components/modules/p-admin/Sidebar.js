@@ -4,23 +4,35 @@ import { ImReply } from "react-icons/im";
 import { FaComments, FaHeart, FaShoppingBag, FaUsers } from "react-icons/fa";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { MdSms, MdLogout } from "react-icons/md";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TbListDetails } from "react-icons/tb";
 import Link from "next/link";
 import swal from "sweetalert";
 
 const Sidebar = () => {
   const path = usePathname();
-
+const router=useRouter()
   const logoutHandler = () => {
-    swal({
-      title: "آیا از خروج اطمینان دارید؟",
-      icon: "warning",
-      buttons: ["نه", "آره"],
-    }).then((result) => {
-      //code
-    });
-  };
+     swal({
+       title: "آیا از خروج اطمینان دارید؟",
+       icon: "warning",
+       buttons: ["نه", "آره"],
+     }).then(async(result) => {
+       const res=await fetch("/api/auth/signout",{
+         method:'POST',
+       
+       })
+       if (res.status===200) {
+         swal({
+           title:"با موفقیت از حساب خارج شدید",
+           icon:"success",
+           buttons:"فهمیدم"
+         }).then(result=>{
+ router.replace('/')
+         })
+       }
+     });
+   };
   return (
     <aside className="w-[350px] h-screen bg-panelBrown text-white p-2.5 sticky top-0">
       <div className="text-center mt-3 pb-[23px] border-b border-white">
@@ -56,7 +68,7 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            <Link href={"/p-admin"} className={styles.sidebar_link_active}>
+            <Link href={"/p-admin"} className={`${styles.sidebar_link_active} list-none flex items-center gap-[11px] text-[18px] opacity-70`}>
               <ImReply />
               پیشخوان
             </Link>
