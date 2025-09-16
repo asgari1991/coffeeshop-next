@@ -7,6 +7,8 @@ import CommentModel from "@/models/Comment";
 import UserModel from "@/models/User";
 import ProductModel from "@/models/Product";
 import connectToDB from "@/configs/db";
+import SaleChart from "@/components/templates/p-admin/index/SaleChart";
+import GrowthChart from "@/components/templates/p-admin/index/GrowthChart";
 
 async function AdminHomePage() {
   connectToDB();
@@ -26,9 +28,11 @@ async function AdminHomePage() {
         <div className="flex gap-2.5 px-[42px] mt-8">
           <section className=" w-1/2 text-center rounded p-5 bg-panelBrown/10">
             <p className="mb-2.5">آمار فروش</p>
+            <SaleChart/>
           </section>
           <section className=" w-1/2 text-center rounded p-5 bg-panelBrown/10">
             <p className="mb-2.5">نرخ رشد</p>
+            <GrowthChart/>
           </section>
         </div>
       </main>
