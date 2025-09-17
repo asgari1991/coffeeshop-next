@@ -28,3 +28,16 @@ export async function POST(req) {
     return Response.json({ message: error }, { status: 500 });
   }
 }
+
+export async function DELETE(req) {
+  try {
+    connectToDB()
+  const body=await req.json()
+  const {id}=await body
+  await UserModel.findOneAndDelete({_id:id})
+  return Response.json({message: "user deleted successfully"})
+  } catch (error) {
+    return Response.json({message:error},{status:500})
+  }
+  
+}
