@@ -41,3 +41,23 @@ export async function DELETE(req) {
   }
   
 }
+export async function PUT(req) {
+  try {
+    connectToDB()
+    const body=await req.json()
+    const {name, email, phone,userID}=await body
+    //validation
+if(!email || !phone || !name){
+  return Response.json({message:"at least one field is required"},{status:400})
+}
+    await UserModel.findOneAndUpdate({_id:userID},{
+      $set:{
+        name, phone , email
+      },
+    })
+    return Response.json({message:"user updated successfully"})
+
+  } catch (error) {
+    return Response.json({message:error},{status:500})
+  }
+}
