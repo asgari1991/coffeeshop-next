@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import styles from "./table.module.css";
+import { showSwal } from "@/utils/helpers";
 export default function DataTable({ users, title }) {
   const router = useRouter();
   const changeRole = async (userID) => {
     //validation
-
+    
     const res = await fetch("/api/user/role", {
       method: "PUT",
       headers: {
@@ -53,6 +54,37 @@ export default function DataTable({ users, title }) {
       }
     });
   };
+  const banUser = async (email,phone)=>{
+    //validation
+    if(!email && !phone){
+      return showSwal("برای بن کردن کاربر باید ایمیل یا شماره تلفن داشته باشد","error","فهمیدم")
+    }
+//confirmation
+swal({
+      title: "آیا از بن کردن کاربر اطمینان دارید؟",
+      icon: "warning",
+      buttons: ["نه", "آره"],
+    }).then(async (result) => {
+      if (result) {
+        const res=await fetch("/api/user/ban",{
+          method:"POST",
+          headers:{
+            "Conternt-Type":"application/json"
+          },
+          body:JSON.stringify({email,phone})
+        })
+    if(res.status===200){
+      swal({
+        title: "کاربر با موفقیت بن شد",
+        icon: "success",
+        buttons: "فهمیدم",
+      }).then(()=>{
+        router.refresh();
+      })
+    }
+      }
+    })
+  }
   return (
     <div>
       <div>
@@ -114,6 +146,7 @@ export default function DataTable({ users, title }) {
                   <button
                     type="button"
                     className="w-full bg-panelBrown text-white py-[0.4rem] px-[0.7rem] rounded cursor-pointer text-sm"
+                    onClick={() => banUser(user.email,user.phone)}
                   >
                     بن
                   </button>
