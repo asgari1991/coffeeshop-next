@@ -3,6 +3,7 @@
 import { showSwal } from "@/utils/helpers";
 import styles from "./table.module.css";
 export default function DataTable({ tickets, title }) {
+  
   const showTicketBody = (body) => {
     showSwal(body, undefined, "بستن");
   };
@@ -52,9 +53,7 @@ export default function DataTable({ tickets, title }) {
             title: "کاربر با موفقیت بن شد",
             icon: "success",
             buttons: "فهمیدم",
-          }).then(() => {
-            router.refresh();
-          });
+          })
         }
       }
     });

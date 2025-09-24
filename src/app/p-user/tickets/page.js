@@ -7,7 +7,7 @@ import { authUser } from "@/utils/auth.server";
 const page = async () => {
   connectToDB();
   const user = await authUser()
-  const tickets = await TicketModel.find({ user: user._id }).populate(
+  const tickets = await TicketModel.find({ user: user._id, isAnswer:false }).populate(
     "department",
     "title"
   ).sort({_id:-1});
