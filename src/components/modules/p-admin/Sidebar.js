@@ -90,7 +90,7 @@ const router=useRouter()
               <MdSms />
               تیکت ها
             </Link>
-            <Link href={"/p-admin/discount"} className="list-none flex items-center gap-[11px] text-[18px] opacity-70">
+            <Link href={"/p-admin/discounts"} className="list-none flex items-center gap-[11px] text-[18px] opacity-70">
               <MdOutlineAttachMoney />
               تخفیفات
             </Link>

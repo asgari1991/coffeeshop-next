@@ -48,6 +48,32 @@ export default function DataTable({ comments, title }) {
       });
     }
   };
+  const deleteComment=async(commentID)=>{
+   swal({
+      title: "آیا از حذف کامنت اطمینان دارید؟",
+      icon: "warning",
+      buttons: ["نه", "آره"],
+    }).then(async (result) => {
+      if (result) {
+        const res = await fetch("/api/comments", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: commentID }),
+        });
+        if (res.status === 200) {
+          swal({
+            title: "کامنت با موفقیت حذف شد",
+            icon: "success",
+            buttons: "فهمیدم",
+          }).then(() => {
+            router.refresh();
+          });
+        }
+      }
+    });
+  }
   return (
     <div>
       <div>
@@ -69,7 +95,7 @@ export default function DataTable({ comments, title }) {
               <th>ویرایش</th>
               <th>حذف</th>
               <th> تایید / رد کامنت</th>
-              <th>پاسخگویی</th>
+              
               <th>بن</th>
             </tr>
           </thead>
@@ -107,6 +133,7 @@ export default function DataTable({ comments, title }) {
                   <button
                     type="button"
                     className="w-full bg-panelBrown text-white py-[0.4rem] px-[0.7rem] rounded cursor-pointer text-sm"
+                    onClick={()=>deleteComment(comment._id)}
                   >
                     حذف
                   </button>
@@ -131,14 +158,6 @@ export default function DataTable({ comments, title }) {
                   )}
                 </td>
 
-                <td>
-                  <button
-                    type="button"
-                    className="w-full bg-panelBrown text-white py-[0.4rem] px-[0.7rem] rounded cursor-pointer text-sm"
-                  >
-                    پاسخگویی
-                  </button>
-                </td>
                 <td>
                   <button
                     type="button"
