@@ -1,4 +1,4 @@
-
+"use client";
 import { FaFacebookF, FaRegStar, FaStar, FaTwitter } from "react-icons/fa";
 import { IoCheckmark } from "react-icons/io5";
 
@@ -7,35 +7,72 @@ import { FaTelegram, FaLinkedinIn, FaPinterest } from "react-icons/fa";
 import styles from "./details.module.css";
 import Breadcrumb from "./Breadcrumb";
 import AddToWishlist from "./AddToWishlist";
+import { useState } from "react";
+import { showSwal } from "@/utils/helpers";
 
 const Details = ({ product }) => {
- 
-  
+  const [count, setCount] = useState(1);
+  const addToCart = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cart.length) {
+      const isInCart = cart.some((item) => item.id === product._id);
+      if (isInCart) {
+        cart.forEach((item) => {
+          if (item.id === product._id) {
+            item.count = item.count + count;
+            
+          }
+          
+        });
+        localStorage.setItem("cart",JSON.stringify(cart))
+                    showSwal("محصول به سبد خرید اضافه شد", "success", "فهمیدم")
+
+      }else{
+        const cartItem = {
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        count,
+      };
+      cart.push(cartItem);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      showSwal("محصول به سبد خرید اضافه شد", "success", "فهمیدم");
+    
+      }
+    } else {
+      const cartItem = {
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        count,
+      };
+      cart.push(cartItem);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      showSwal("محصول به سبد خرید اضافه شد", "success", "فهمیدم");
+    }
+  };
   return (
     <main className="w-[63%]">
       <Breadcrumb title={product.name} />
-      <h2 className="font-shabnamBold">
-{product.name}
-      </h2>
+      <h2 className="font-shabnamBold">{product.name}</h2>
 
       <div className={`${styles.rating} flex gap-2 mt-8`}>
         <div className="flex gap-0.5">
-          {new Array(product.score).fill(0).map((item,index)=>(
-<FaStar key={index} />
+          {new Array(product.score).fill(0).map((item, index) => (
+            <FaStar key={index} />
           ))}
-          {new Array(5-product.score).fill(0).map((item,index)=>(
-<FaRegStar key={index} />
+          {new Array(5 - product.score).fill(0).map((item, index) => (
+            <FaRegStar key={index} />
           ))}
-        
         </div>
         <p>(دیدگاه {product.comments.length} کاربر)</p>
       </div>
 
       <p className="text-mainBrown text-2xl font-shabnamBold my-6">
-       {product.price.toLocaleString()} تومان
+        {product.price.toLocaleString()} تومان
       </p>
       <span className="block w-[93%] text-sm text-gray-500">
-      {product.shortDescription}
+        {product.shortDescription}
       </span>
 
       <hr />
@@ -48,22 +85,31 @@ const Details = ({ product }) => {
       <div
         className={`flex gap-2.5 flex-row-reverse justify-end items-center text-center mb-5`}
       >
-        <button className="bg-buttonGreen py-[0.85rem] px-5 cursor-pointer transition-all duration-200 font-shabnam hover:bg-buttonHover ">
+        <button
+          className="bg-buttonGreen py-[0.85rem] px-5 cursor-pointer transition-all duration-200 font-shabnam hover:bg-buttonHover "
+          onClick={addToCart}
+        >
           افزودن به سبد خرید
         </button>
         <div className="flex justify-between items-center w-20 border border-gray-500">
-          <span className="w-[30%] cursor-pointer py-2.5 border-l border-black">
+          <span
+            className="w-[30%] cursor-pointer py-2.5 border-l border-black"
+            onClick={() => setCount(count - 1)}
+          >
             -
           </span>
-          1
-          <span className="w-[30%] cursor-pointer py-2.5 border-r border-black">
+          {count}
+          <span
+            className="w-[30%] cursor-pointer py-2.5 border-r border-black"
+            onClick={() => setCount(count + 1)}
+          >
             +
           </span>
         </div>
       </div>
 
       <section className="flex gap-5 mb-[30px]">
-        <AddToWishlist productID={product._id}/>
+        <AddToWishlist productID={product._id} />
         <div className="flex items-center gap-1">
           <TbSwitch3 className="text-xl" />
           <a
@@ -84,7 +130,7 @@ const Details = ({ product }) => {
           <strong>دسته:</strong> Coffee Capsule, کپسول قهوه, همه موارد
         </p>
         <p>
-          <strong>برچسب:</strong> 
+          <strong>برچسب:</strong>
           {product.tags.join(" , ")}
         </p>
       </div>
