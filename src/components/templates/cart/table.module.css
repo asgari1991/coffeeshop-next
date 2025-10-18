@@ -1,0 +1,72 @@
+.tabel_container {
+  width: 100%;
+}
+.table {
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+.table td,
+.table th {
+  padding: 8px 10px;
+  text-align: center;
+}
+.table tbody tr td:last-child {
+  padding: 8px 5px !important;
+}
+
+.price {
+  color: #777 !important;
+  font-size: 14px;
+}
+.counter div {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+.counter span {
+  cursor: pointer;
+}
+.counter span:hover {
+  color: white;
+  background: rgb(52, 24, 14);
+  transition: 0.1s all ease-in;
+}
+.counter span,
+.counter p {
+  padding: 8px 10px;
+}
+.counter span:nth-child(3) {
+  border-right: 2px solid rgba(0, 0, 0, 0.1);
+}
+.counter span:nth-child(1) {
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+}
+.set_off_btn:hover {
+  background: rgb(113, 29, 28) !important;
+}
+
+
+.set_off_btn {
+  padding: 10px 28px;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  transition: 0.1s all ease-in;
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 4rem;
+  border-radius: 0.001px;
+  color: white;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+  background-color: rgb(0, 137, 121);
+}
