@@ -6,6 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import { useEffect, useState } from "react";
 import stateData from "@/utils/stateData";
 import Select from "react-select";
+import { showSwal } from "@/utils/helpers";
 
 const stateOptions = stateData();
 
@@ -13,6 +14,7 @@ const Table = () => {
   const [cart, setCart] = useState([]);
   const [stateSelectedOption, setStateSelectedOption] = useState(null);
   const [changeAddress, setChangeAddress] = useState(false);
+  const [discount, setDiscount] = useState("");
 
   useEffect(() => {
     const localCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -31,7 +33,25 @@ const Table = () => {
 
     return totalPrice;
   };
+const checkDiscount=async()=>{
+  // validation
 
+  const res=await fetch("/api/discounts/use",{
+    method:"PUT",
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({code:discount})
+  })
+  console.log('res->',res);
+  if (res.status===404) {
+    return showSwal("کد وارد شده معتبر نمی باشد","error","تلاش مجدد")
+  } else if (res.status===422) {
+        return showSwal("کد وارد شده منقضی شده باشد","error","تلاش مجدد")
+  } else if (res.status===200) {
+        return showSwal("کد با موفقیت اعمال شد ","success","فهمیدم")
+  } 
+}
   return (
     <>
       {" "}
@@ -49,7 +69,9 @@ const Table = () => {
           <tbody>
             {cart.map((item) => (
               <tr className="align-middle">
-                <td dir="rtl">{(item.count * item.price).toLocaleString()} تومان</td>
+                <td dir="rtl">
+                  {(item.count * item.price).toLocaleString()} تومان
+                </td>
                 <td dir="rtl" className={styles.counter}>
                   <div>
                     <span>-</span>
@@ -90,8 +112,15 @@ const Table = () => {
             بروزرسانی سبد خرید
           </button>
           <div className="flex items-baseline gap-1">
-            <button className={styles.set_off_btn}>اعمال کوپن</button>
-            <input type="text" placeholder="کد تخفیف" dir="rtl" className="px-4 py-3 rounded bg-white text-black w-[230px] border border-black/10" />
+            <button className={styles.set_off_btn} onClick={checkDiscount}>اعمال کوپن</button>
+            <input
+              type="text"
+              placeholder="کد تخفیف"
+              value={discount}
+              onChange={(event) => setDiscount(event.target.value)}
+              dir="rtl"
+              className="px-4 py-3 rounded bg-white text-black w-[230px] border border-black/10"
+            />
           </div>
         </section>
       </div>
@@ -109,7 +138,9 @@ const Table = () => {
         </p>
         <div dir="rtl" className=" flex justify-between mt-4">
           <p>حمل و نقل </p>
-          <span className="text-gray-500 w-[150px] text-left">حمل و نقل به تهران (فقط شهر تهران).</span>
+          <span className="text-gray-500 w-[150px] text-left">
+            حمل و نقل به تهران (فقط شهر تهران).
+          </span>
         </div>
         <p
           onClick={() => setChangeAddress((prev) => !prev)}
