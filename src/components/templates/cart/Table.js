@@ -14,44 +14,50 @@ const Table = () => {
   const [cart, setCart] = useState([]);
   const [stateSelectedOption, setStateSelectedOption] = useState(null);
   const [changeAddress, setChangeAddress] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [discount, setDiscount] = useState("");
 
   useEffect(() => {
     const localCart = JSON.parse(localStorage.getItem("cart")) || [];
     setCart(localCart);
   }, []);
+  useEffect(calcTotalPrice, [cart]);
 
-  const calcTotalPrice = () => {
-    let totalPrice = 0;
+  function calcTotalPrice() {
+    let price = 0;
 
     if (cart.length) {
-      totalPrice = cart.reduce(
+      price = cart.reduce(
         (prev, current) => prev + current.price * current.count,
         0
       );
+      setTotalPrice(price);
     }
 
-    return totalPrice;
-  };
-const checkDiscount=async()=>{
-  // validation
+    setTotalPrice(price);
+  }
+  const checkDiscount = async () => {
+    // validation
 
-  const res=await fetch("/api/discounts/use",{
-    method:"PUT",
-    headers:{
-      'Content-Type':'application/json'
-    },
-    body:JSON.stringify({code:discount})
-  })
-  console.log('res->',res);
-  if (res.status===404) {
-    return showSwal("کد وارد شده معتبر نمی باشد","error","تلاش مجدد")
-  } else if (res.status===422) {
-        return showSwal("کد وارد شده منقضی شده باشد","error","تلاش مجدد")
-  } else if (res.status===200) {
-        return showSwal("کد با موفقیت اعمال شد ","success","فهمیدم")
-  } 
-}
+    const res = await fetch("/api/discounts/use", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code: discount }),
+    });
+    console.log("res->", res);
+    if (res.status === 404) {
+      return showSwal("کد وارد شده معتبر نمی باشد", "error", "تلاش مجدد");
+    } else if (res.status === 422) {
+      return showSwal("کد وارد شده منقضی شده باشد", "error", "تلاش مجدد");
+    } else if (res.status === 200) {
+      const discountCode = await res.json();
+      const newPrice = totalPrice - (totalPrice * discountCode.percent)/100;
+      setTotalPrice(newPrice)
+      return showSwal("کد با موفقیت اعمال شد ", "success", "فهمیدم");
+    }
+  };
   return (
     <>
       {" "}
@@ -112,7 +118,9 @@ const checkDiscount=async()=>{
             بروزرسانی سبد خرید
           </button>
           <div className="flex items-baseline gap-1">
-            <button className={styles.set_off_btn} onClick={checkDiscount}>اعمال کوپن</button>
+            <button className={styles.set_off_btn} onClick={checkDiscount}>
+              اعمال کوپن
+            </button>
             <input
               type="text"
               placeholder="کد تخفیف"
@@ -167,7 +175,7 @@ const checkDiscount=async()=>{
 
         <div className={totalStyles.total}>
           <p>مجموع</p>
-          <p>{calcTotalPrice().toLocaleString()} تومان</p>
+          <p>{totalPrice.toLocaleString()} تومان</p>
         </div>
         <Link href={"/checkout"}>
           <button className={totalStyles.checkout_btn}>
