@@ -1,6 +1,6 @@
 import { IoMdStar } from "react-icons/io";
 import styles from "./commentForm.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { showSwal } from "@/utils/helpers";
 
 
@@ -9,16 +9,27 @@ const CommentForm = ({productID}) => {
   const [email, setEmail] = useState("");
   const [body, setBody] = useState("");
   const [score, setScore] = useState(5);
+  const [isSaveUserInfo,setIsSaveUserInfo]=useState(false)
   const setCommentScore =(scoreValue) => {
     setScore(scoreValue);
    showSwal("امتیاز شما ثبت شد", "success", "ثبت امتیاز");
   }
+  useEffect(()=>{
+const userInfo=JSON.parse(localStorage.getItem('userInfo'))
+setUsername(userInfo?.username)
+setEmail(userInfo?.email)
+  },[])
   const submitComment =async (e) => {
     e.preventDefault();
     if (!username || !email || !body) {
       showSwal("لطفا همه فیلدها را پر کنید", "error", "خطا");
       return;
     }
+    const userInfo={
+      username,
+      email
+    }
+    localStorage.setItem("userInfo",JSON.stringify(userInfo))
     const comment={
       username,
       email,
@@ -107,7 +118,7 @@ const CommentForm = ({productID}) => {
         </div>
       </div>
       <div className={styles.checkbox}>
-        <input type="checkbox" name="" id="" />
+        <input type="checkbox" name="" id="" value={isSaveUserInfo} onChange={(event)=>setIsSaveUserInfo((prevValue)=>!prevValue)} />
         <p className="text-sm font-shabnam">
           {" "}
           ذخیره نام، ایمیل و وبسایت من در مرورگر برای زمانی که دوباره دیدگاهی
